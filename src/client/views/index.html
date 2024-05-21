@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Travel Planner</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="title-app">
+          My Travel Planner
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <form id="urlForm" onsubmit="return Client.handleSubmitAction(event)" method="POST">
+          <P id="error"></P>
+          <label for="destination">My trip to: </label>
+          <input id="destination" type="text" name="destination" placeholder="Please enter your destination" required>
+          <label for="date-planner">Departing: </label>
+          <input type="date" id="date-planner" name="date-planner">
+          <button id="submitButton" type="submit">Search</button>
+        </form>
+      </section>
+
+      <section class="container">
+        <div id="result-trips">
+          <strong>My trips result: </strong>
+          <div id="results"></div>
+        </div>
+
+        <div id="list-trips">
+          <strong>List my trips Saved:</strong>
+          <div id="saved"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer></footer>
+    </body>
+</html>
