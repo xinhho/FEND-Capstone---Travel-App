@@ -49,71 +49,31 @@ app.get('/', (req, res) => {
 // POST API
 
 app.post('/destination', async (req, res) => {
-  // destinationName = req.body.destinationName;
-  // const apiURL = `${geonamesBaseURL}q=${destinationName}&maxRows=1&username=${apiGeonamesKey}`
-  // console.log('apiURL', apiURL);
-  // let mcData = {}
-  // const response = await fetch(apiURL).catch(e => { console.log(e)})
-  // if (response) {
-  //   mcData = await response.json()
-  // }
-  // console.log('mcData', mcData);
-  // destinationData['country'] = mcData.country;
-  // destinationData['latitude'] = mcData.latitude;
-  // destinationData['longitude'] = mcData.longitude;
-
-  // console.log('destinationData', destinationData);
-  // res.send(mcData);
+  let mcData = {}
   const destinationName = req.body.destination;
-  let destinationData = null
-  destinationData = await getDestinationInfo(destinationName, apiGeonamesKey).catch(e => {
-    console.log(e.code)
-  })
+  mcData = await getDestinationInfo(destinationName, apiGeonamesKey);
+  destinationData['country'] = mcData.countryName;
+  destinationData['latitude'] = mcData.lat;
+  destinationData['longitude'] = mcData.lng;
   console.log('destinationData', destinationData);
-  return res.send(destinationData || {})
+  return res.send(destinationData)
 })
 
-// app.post('/weather', async (req,res) => {
-//   const latitude = req.body.latitude;
-//   const longitude = req.body.longitude;
-//   weatherData = await getWeatherInfo(latitude, longitude)
-//   return res.send(weatherData)
-// })
+app.post('/weather', async (req,res) => {
+  let mcData = {}
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+  weatherData = await getWeatherInfo(latitude, longitude, weatherbitKey)
+  console.log('weatherData', weatherData);
+  return res.send(weatherData)
+})
 
-// app.post('/image', async (req,res) => {
-//   const countryName = req.body.countryName;
-//   imagesData = await getImageOfDestination(countryName)
-//   return res.send(imagesData)
-// })
-
-// app.post('/weather', async (req, res) => {
-//   latitude = req.body.latitude;
-//   longitude = req.body.longitude;
-
-//   const apiURL = `${weatherbitBaseURL}lat=${latitude}&lon=${longitude}&key=${weatherbitKey}`
-//   console.log('apiURL', apiURL);
-
-//   const response = await fetch(apiURL)
-//   const mcData = await response.json()
-//   weatherData['country'] = mcData.country;
-//   weatherData['latitude'] = mcData.latitude;
-//   weatherData['longitude'] = mcData.longitude;
-
-//   console.log('weatherData', weatherData);
-//   res.send(weatherData);
-// })
-
-// app.post('/image', async (req, res) => {
-//   countryName = req.body.countryName;
-//   const apiURL = `${imageBaseURL}key=${imageKey}&q=${countryName}&image_type=photo`
-//   console.log('apiURL', apiURL);
-
-//   const response = await fetch(apiURL)
-//   const mcData = await response.json()
-
-//   console.log('weatherData', imagesData);
-//   res.send(imagesData);
-// })
+app.post('/image', async (req,res) => {
+  let mcData = {}
+  const countryName = req.body.countryName;
+  imagesData = await getImageOfDestination(countryName, imageKey)
+  return res.send(imagesData)
+})
 
 // Designates what port the app will listen to for incoming requests
 const port = 8085;

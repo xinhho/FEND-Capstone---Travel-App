@@ -16,9 +16,13 @@ const handleSubmitAction = async (event) => {
     //get the location first and make sure call is successful
     const destinationInfo = await getDestinationInfo(inputForm);
     console.log('destinationInfo', destinationInfo);
-    if (destinationInfo && !destinationInfo.error) {
-      const { lng, lat, name } = await destinationInfo;
-      
+    if (destinationInfo) {
+      console.log('1');
+      const { longitude, latitude, country } = await destinationInfo;
+      const WeatherInfo = await getWeatherInfo(latitude, longitude);
+      console.log('WeatherInfo', WeatherInfo);
+      const img = await getImage(country);
+      console.log('img', img);
     }
   } else {
     showError('Please enter valid url!')
@@ -38,16 +42,12 @@ const getDestinationInfo = async (inputForm) => {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': '*',
-      'Content-Type': 'application/json',
-      Connection: 'keep-alive'
-      // 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
+      'Content-Type': 'application/json'
     }
   };
 
   try {
     const response = await axios.post(destinationServerURL, inputForm, headerParameter)
-    // const response = await axios.get('http://api.geonames.org/searchJSON?q=vietnam&maxRows=1&username=xinhho')
-    console.log(response)
     const destinationInfor = response?.data;
     return destinationInfor;
   } catch (error) {
@@ -56,60 +56,49 @@ const getDestinationInfo = async (inputForm) => {
   }
 }
 
-// const getWeatherInfo = async (latitude = '', longitude = '' ) => {
-//   const bodyParam = {
-//     latitude: latitude,
-//     longitude: longitude
-//   }
-//   const parameter = {
-//     method: 'POST',
-//     credentials: 'same-origin',
-//     headers: {
-//       'Access-Control-Allow-Origin': '*',
-//       'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, DELETE, OPTIONS',
-//       'Access-Control-Allow-Headers': '*',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(bodyParam)
-//   };
+const getWeatherInfo = async (latitude = '', longitude = '' ) => {
+  const bodyParam = {
+    latitude: latitude,
+    longitude: longitude
+  }
+  const headerParameter = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': '*',
+      'Content-Type': 'application/json'
+    }
+  };
   
-//   const resData = await fetch(weatherServerURL, parameter)
-//   try {
-//     const weatherInfor = await resData.json();
-//     console.log('weatherInfor:', weatherInfor)
-//     return weatherInfor;
-//   } catch (error) {
-//     console.log('error', error);
-//     showError(error)
-//   }
-// }
+  try {
+    const response = await axios.post(weatherServerURL, bodyParam, headerParameter);
+    const weatherInfor = response?.data;
+    return weatherInfor;
+  } catch (error) {
+    console.log('error', error);
+    showError(error)
+  }
+}
 
-// const getImage = async (countryName = '') => {
-//   const bodyParam = {
-//     countryName: countryName
-//   }
-//   const parameter = {
-//     method: 'POST',
-//     credentials: 'same-origin',
-//     headers: {
-//       'Access-Control-Allow-Origin': '*',
-//       'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, DELETE, OPTIONS',
-//       'Access-Control-Allow-Headers': '*',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(bodyParam)
-//   };
+const getImage = async (countryName = '') => {
+  const headerParameter = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': '*',
+      'Content-Type': 'application/json'
+    }
+  };
   
-//   const resData = await fetch(imageServerURL, parameter)
-//   try {
-//     const image = await resData.json();
-//     console.log('image:', image)
-//     return image;
-//   } catch (error) {
-//     console.log('error', error);
-//     showError(error)
-//   }
-// }
+  try {
+    const response = await axios.post(imageServerURL, countryName, headerParameter);
+    const image = response?.data;
+    return image;
+  } catch (error) {
+    console.log('error', error);
+    showError(error)
+  }
+}
 
 // const updateDynamicUI = async (response = {}) => {
 //   document.getElementById('score-tag').innerHTML = `Score Tag: ${response.score_tag}`;
