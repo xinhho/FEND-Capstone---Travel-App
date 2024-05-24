@@ -1,5 +1,5 @@
 // import js files
-// import { checkValidUrl } from './js/urlChecker'
+import { updateTripResultUI } from './js/utils'
 import { handleSubmitAction } from './js/formHandler'
 
 // sass files
@@ -14,6 +14,6 @@ console.log("CHANGE!!");
 
 
 export {
-  // checkValidUrl,
+  updateTripResultUI,
   handleSubmitAction
 }

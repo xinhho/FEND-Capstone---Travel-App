@@ -5,6 +5,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  font-size: 20px;
 }
 
 main {
@@ -15,7 +16,7 @@ main {
 }
 
 section {
-    max-width: 800px;
+    max-width: 80vw;
     margin: 50px auto;
 }
 
@@ -26,11 +27,61 @@ section {
   padding: 16px;
   width: 100%;
   background-color: #5454549c;
+  flex-direction: column;
 }
 
-.container div {
+.container #result-trips, .container #list-trips {
   display: flex;
   width: 100%;
   color: #fff;
   flex-direction: column;
+  padding: 8px;
+}
+
+#result-trips strong, #list-trips strong {
+  padding-bottom: 16px;
+}
+
+#trip-card {
+  display: flex;
+  width: 50%;
+  padding: 10px;
+  border: 1px solid;
+  background-color: #9d979c;
+}
+
+.country-img {
+  width: 100%;
+  display: flex;
+  flex: 1;
+}
+
+.country-img img {
+  width: 100%;
+  height: auto;
+}
+
+.country-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-left: 16px;
+}
+
+.group-btn {
+  display: flex;
+  justify-content: center;
+}
+
+#save-btn, #remove-btn {
+  padding: 8px;
+  margin: 8px;
+}
+
+p {
+  padding: 8px;
+}
+
+h2 {
+  padding-bottom: 16px;
 }

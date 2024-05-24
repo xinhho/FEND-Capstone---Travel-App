@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const fetch = require('node-fetch');
 const cors = require('cors');
-const { getDestinationInfo, getImageOfDestination, getWeatherInfo } = require('./requestHandle')
+const { getDestinationInfo, getImageOfDestination, getWeatherInfo } = require('./requestHandle');
+const { CleanPlugin } = require('webpack');
 
 dotenv.config();
 
@@ -26,15 +27,12 @@ app.use((_req, res, next) => {
 // Variables for url and api key
 
 // API for destinations
-// const geonamesBaseURL = 'http://api.geonames.org/searchJSON?'
 const apiGeonamesKey = process.env.API_GEONAMES_KEY
 
 // API for weather
-// const weatherbitBaseURL = 'http://api.weatherbit.io/v2.0/forecast/daily?'
 const weatherbitKey = process.env.API_WEATHERBIT_KEY
 
 // API for get Images
-// const imageBaseURL = 'https://pixabay.com/api/?'
 const imageKey = process.env.API_IMAGE_KEY
 
 let destinationData = {};
@@ -63,13 +61,15 @@ app.post('/weather', async (req,res) => {
   let mcData = {}
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
-  weatherData = await getWeatherInfo(latitude, longitude, weatherbitKey)
+  mcData = await getWeatherInfo(latitude, longitude, weatherbitKey)
+  weatherData['highTemp'] = mcData.high_temp;
+  weatherData['lowTemp'] = mcData.low_temp;
+  weatherData['weatherDiscription'] = mcData.weather;
   console.log('weatherData', weatherData);
   return res.send(weatherData)
 })
 
 app.post('/image', async (req,res) => {
-  let mcData = {}
   const countryName = req.body.countryName;
   imagesData = await getImageOfDestination(countryName, imageKey)
   return res.send(imagesData)

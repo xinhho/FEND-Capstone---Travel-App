@@ -1,31 +1,38 @@
 // Replace checkForName with a function that checks the URL
-// import { checkValidUrl } from './utils';
+import { updateTripResultUI } from './utils';
 const axios = require('axios');
 const destinationServerURL = 'http://localhost:8085/destination';
 const weatherServerURL = 'http://localhost:8085/weather';
 const imageServerURL = 'http://localhost:8085/image';
 
 const handleSubmitAction = async (event) => {
+  let destinationInfo = {}
+  let weatherInfo = {}
+  let imgUrl = ''
   event.preventDefault();
   // Get values input from the input field
+  const tripCard = document.getElementById('trip-card');
+  tripCard.style.display = "none";
   const inputForm = document.getElementById('urlForm');
   const destination = document.getElementById('destination').value;
   const datePlanner = document.getElementById('date-planner').value;
   // Check if values input is not empty
   if (destination !== '' && datePlanner !== '') {
     //get the location first and make sure call is successful
-    const destinationInfo = await getDestinationInfo(inputForm);
+    destinationInfo = await getDestinationInfo(inputForm);
     console.log('destinationInfo', destinationInfo);
     if (destinationInfo) {
-      console.log('1');
-      const { longitude, latitude, country } = await destinationInfo;
-      const WeatherInfo = await getWeatherInfo(latitude, longitude);
-      console.log('WeatherInfo', WeatherInfo);
-      const img = await getImage(country);
-      console.log('img', img);
+      weatherInfo = await getWeatherInfo(destinationInfo.latitude, destinationInfo.longitude);
+      console.log('WeatherInfo', weatherInfo);
+      imgUrl = await getImageOfDestination(destinationInfo.country);
+      console.log('imgUrl', imgUrl);
+
+      if (weatherInfo && imgUrl) {
+        updateTripResultUI(destinationInfo, weatherInfo, imgUrl, datePlanner, tripCard)
+      }
     }
   } else {
-    showError('Please enter valid url!')
+    showError('Please enter country name and date!')
   }
 }
 
@@ -80,7 +87,7 @@ const getWeatherInfo = async (latitude = '', longitude = '' ) => {
   }
 }
 
-const getImage = async (countryName = '') => {
+const getImageOfDestination = async (countryName = '') => {
   const headerParameter = {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -91,7 +98,7 @@ const getImage = async (countryName = '') => {
   };
   
   try {
-    const response = await axios.post(imageServerURL, countryName, headerParameter);
+    const response = await axios.post(imageServerURL, {countryName}, headerParameter);
     const image = response?.data;
     return image;
   } catch (error) {
@@ -100,13 +107,6 @@ const getImage = async (countryName = '') => {
   }
 }
 
-// const updateDynamicUI = async (response = {}) => {
-//   document.getElementById('score-tag').innerHTML = `Score Tag: ${response.score_tag}`;
-//   document.getElementById('agreement').innerHTML = `Agreement: ${response.agreement}`;
-//   document.getElementById('subjectivity').innerHTML = `Subjectivity: ${response.subjectivity}`;
-//   document.getElementById('confidence').innerHTML = `Confidence: ${response.confidence}`;
-//   document.getElementById('irony').innerHTML = `Irony: ${response.irony}`;
-// };
 // Export the handleSubmit function
 export { handleSubmitAction };
 
