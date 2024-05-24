@@ -1,10 +1,10 @@
-#### My Travel Planner - FEND-Capstone-Travel-App
+# My Travel Planner - FEND-Capstone-Travel-App
 
-# Project Introduction
+## Project Introduction
 
 This project requires you to build out a travel app that, at a minimum, obtains a desired trip location & date from the user, and displays weather and an image of the location using information obtained from external APIs
 
-# To run in development mode
+## To run in development mode
 - Clone this repository
 - run npm install (please use node version v18.20.3 . You will have an error when running npm i if you use the older version of nodejs)
 - to start the webpack prod server by command: 
@@ -19,7 +19,7 @@ This project requires you to build out a travel app that, at a minimum, obtains 
 - to run test:
     $ npm run test
 
-# Configs
+## Configs
   Here, we have two separate webpack config files for both development mode(webpack.config.dev.js) and production mode(webpack.config.prod.js )
 
   All the scripts and dependencies are listed in the package.json file.
@@ -38,7 +38,7 @@ You need to create your account on https://www.weatherbit.io/account/create and 
 ### For the Pixabay. API.
 You need to create your account on https://pixabay.com/api/docs/ and get your an API key
 
-### Final Output
+## Final Output
 ![Output](https://github.com/xinhho/FEND-Capstone-Travel-App/blob/master/src/assets/ui-initt.png)
 ![Output](https://github.com/xinhho/FEND-Capstone-Travel-App/blob/master/src/assets/out-put.png)
 ![Output](https://github.com/xinhho/FEND-Capstone-Travel-App/blob/master/src/assets/error-1.png)
