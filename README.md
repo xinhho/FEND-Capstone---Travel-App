@@ -50,8 +50,10 @@ dotenv.config();
 A great step to take with your finished project would be to deploy it! Unfortunately its a bit out of scope for me to explain too much about how to do that here, but checkout [Netlify](https://www.netlify.com/) or [Heroku](https://www.heroku.com/) for some really intuitive free hosting options.
 
 ### Final Output
-![Output](https://github.com/xinhho/evaluate-news-nlp/blob/main/src/assets/output-completed.PNG)
-![Output](https://github.com/xinhho/evaluate-news-nlp/blob/main/src/assets/output-error.PNG)
-![Output](https://github.com/xinhho/evaluate-news-nlp/blob/main/src/assets/test-output.PNG)
+![Output](https://github.com/xinhho/FEND-Capstone-Travel-App/blob/master/src/assets/ui-initt.png)
+![Output](https://github.com/xinhho/FEND-Capstone-Travel-App/blob/master/src/assets/out-put.png)
+![Output](https://github.com/xinhho/FEND-Capstone-Travel-App/blob/master/src/assets/error-1.png)
+![Output](https://github.com/xinhho/FEND-Capstone-Travel-App/blob/master/src/assets/error-2.png)
+![Output](https://github.com/xinhho/FEND-Capstone-Travel-App/blob/master/src/assets/test.png)
 
 
