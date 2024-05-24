@@ -1,5 +1,5 @@
 // Replace checkForName with a function that checks the URL
-import { updateTripResultUI } from './utils';
+import { updateTripResultUI, getDurationDay } from './utils';
 const axios = require('axios');
 const destinationServerURL = 'http://localhost:8085/destination';
 const weatherServerURL = 'http://localhost:8085/weather';
@@ -12,24 +12,27 @@ const handleSubmitAction = async (event) => {
   event.preventDefault();
   // Get values input from the input field
   const tripCard = document.getElementById('trip-card');
-  tripCard.style.display = "none";
+  tripCard.style.display = 'none';
   const inputForm = document.getElementById('urlForm');
   const destination = document.getElementById('destination').value;
   const datePlanner = document.getElementById('date-planner').value;
   // Check if values input is not empty
+  
   if (destination !== '' && datePlanner !== '') {
-    //get the location first and make sure call is successful
-    destinationInfo = await getDestinationInfo(inputForm);
-    console.log('destinationInfo', destinationInfo);
-    if (destinationInfo) {
-      weatherInfo = await getWeatherInfo(destinationInfo.latitude, destinationInfo.longitude);
-      console.log('WeatherInfo', weatherInfo);
-      imgUrl = await getImageOfDestination(destinationInfo.country);
-      console.log('imgUrl', imgUrl);
-
-      if (weatherInfo && imgUrl) {
-        updateTripResultUI(destinationInfo, weatherInfo, imgUrl, datePlanner, tripCard)
+    const durationsDay = getDurationDay(datePlanner)
+    console.log('durationsDay', durationsDay);
+    if (durationsDay > 0) {
+      //get the location first and make sure call is successful
+      destinationInfo = await getDestinationInfo(inputForm);
+      if (destinationInfo) {
+        weatherInfo = await getWeatherInfo(destinationInfo.latitude, destinationInfo.longitude);
+        imgUrl = await getImageOfDestination(destinationInfo.country);
+        if (weatherInfo && imgUrl) {
+          updateTripResultUI(destinationInfo, weatherInfo, imgUrl, tripCard, durationsDay)
+        }
       }
+    } else {
+      showError('Please enter a future date')
     }
   } else {
     showError('Please enter country name and date!')

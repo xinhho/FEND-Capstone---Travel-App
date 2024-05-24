@@ -1,5 +1,5 @@
 // import js files
-import { updateTripResultUI } from './js/utils'
+import { updateTripResultUI, getDurationDay } from './js/utils'
 import { handleSubmitAction } from './js/formHandler'
 
 // sass files
@@ -15,5 +15,6 @@ console.log("CHANGE!!");
 
 export {
   updateTripResultUI,
-  handleSubmitAction
+  handleSubmitAction,
+  getDurationDay
 }
